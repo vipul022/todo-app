@@ -1,17 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "./App"
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  <App />,
+  document.getElementById("root")
+  )
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+//   Create a  todo list.
+
+// Requirements:
+
+// 1. Use React hooks to create the  app.
+
+// 2. Add a delete button to remove a list item. ( refer to dynamic form challenge, refactor the code  to use hooks )
+
+// 3. Add a completed/finished button. When a user clicks the completed/finish button it must strike through the list item.
+
+// 4. Style up the app  with pretty colors.
