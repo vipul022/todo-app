@@ -1,82 +1,69 @@
-import React, {useState, useEffect} from "react"
+import React, { useState } from "react";
+import Todo from "./components/Todo";
+import FinishedTodo from "./components/FinishedTodo";
+import Form from "./components/Form";
 
 const App = () => {
- const [todo, setTodo] = useState([])
- const [textDecoration, setTextDecoration] = useState("none")
+  const [todos, setTodos] = useState([]);
+  // const [finishedTodos, setFinishedTodos] = useState();
 
-  const onFormSubmit = (event) => {
-    event.preventDefault()
-  console.log("todo =>",  todo)
-console.log("event.target.name.value=>", event.target.name.value)
-  // ! this is the syntax for setting a state in case we nee to update arrays ot objects
-   setTodo(todo => [...todo, event.target.name.value]);
-  
-   console.log("todo =>",  todo)
-  // setTodo(todo => [...todo, inputVal])
+  const finishedTodo = (index) => {
+    console.log(todos[index].done);
+    // const a = (todos[index] = { done: !done });
+    const cloneTodo = [...todos];
+    // !below value of done is toggled so that FinishedTodo commponent can be rendered
+    cloneTodo[index].done = !cloneTodo[index].done;
+    setTodos(cloneTodo);
+  };
+
+  const removeTodo = (index) => {
+    console.log(index);
+    const cloneTodos = [...todos];
+    cloneTodos.splice(index, 1);
+    setTodos(cloneTodos);
+  };
+  let currentTodo;
+  if (todos) {
+    currentTodo = todos.map((todo, index) => {
+      if (!todo.done) {
+        return (
+          <Todo
+            key={index}
+            index={index}
+            todo={todo.value}
+            finishedTodo={finishedTodo}
+            removeTodo={removeTodo}
+          />
+        );
+      } else {
+        console.log("insideFInished");
+        return (
+          <FinishedTodo
+            key={index}
+            index={index}
+            todo={todo.value}
+            finishedTodo={finishedTodo}
+            removeTodo={removeTodo}
+          />
+        );
+      }
+    });
   }
-   
-  console.log("todo =>",  todo)
- 
-
-
-
-const removeTodo = (index)=> {
-  const newToDos = [...todo]
-  console.log("newTodos=>", newToDos)
-//   console.log("index=> " , index)
-     newToDos.splice(index,1)
-  //  const newToDosArr = newToDos.slice(0, index)
-  //   .concat(newToDos.slice(index + 1, newToDos.length))
-   console.log("index=>",  index)
-  console.log("newToTosArr=>", newToDos)
-
-  // setTodo(newToDos.splice(index,1))
-//   // setTodo([newToDos.splice(index,1)])
-setTodo(newToDos)
-}
-
-const FinishedTodo = (index,t) => {
-  console.log("T", t)
-  const cloneToDos = [...todo]
-  textDecoration === 'none' ? setTextDecoration("line-through") : setTextDecoration('none')
-}
-
-let toDos = todo.map((t, index) =>
-<div key = {index }>
-  
-  <h2  style = {
-    {textDecoration: textDecoration}
-  }>{t}</h2>
-  
-  <button onClick={() => removeTodo(index)}  >Remove</button>
-  <button onClick={() => FinishedTodo(index,t)}  >Finished</button>
-  </div>
-)
-
-
-
-  return(
-    
+  // !below we are creating a todo object and setting the state as array of object
+  const addTodo = (event) => {
+    const todo = { done: false, value: event.target.todo.value };
+    event.preventDefault();
+    setTodos([...todos, todo]);
+  };
+  return (
     <div>
-       
-      <form onSubmit={onFormSubmit}>
-  
-      <input  type="text" name="name" >
-      </input>
-      
-       <button type="submit" >Add</button> 
-       
-       <button>Finished</button>
-       </form>
-       
-        {toDos}
+      <Form addTodo={addTodo} />
+      {currentTodo}
     </div>
-  )
+  );
+};
 
-
-  }
-
-export default App
+export default App;
 
 // Create a  todo list.
 
